@@ -1,5 +1,7 @@
 from sklearn.ensemble import RandomForestClassifier
 from logconfig import logger
+# from svm import *
+# from svmutil import *
 
 
 class Classifier(object):
@@ -20,3 +22,13 @@ class Classifier(object):
         for i in range(0, len(s)):
             classify_result.append(self.feature.name[i] + ';' + str([s[i][0], s[i][1]]))
         return classify_result
+
+        # # svm模型
+        # prob = svm_problem(y, x)
+        # # -t为选择核函数类型，0为线性，其它全设置为默认参数不调整
+        # param = svm_parameter('-t 0')
+        # model = svm_train(prob, param, '-h 0')
+        # p_label, p_acc, p_val = svm_predict(yt, xt, model, '-b 0')
+        # classify_result = []
+        # for i in range(0, len(p_label)):
+        #     classify_result.append(self.feature.name[i] + ';' + str([p_val[i], 0]))

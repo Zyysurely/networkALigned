@@ -49,7 +49,7 @@ class SimplifiedFeature(object):
                 label = 0
                 if item1[0] == item[1]["twitterID"]:
                     label = 1
-                s = item[0] + ',' + item1[0] + ',' + str(social_feature) + ',' + str(label) + '\n'
+                # s = item[0] + ',' + item1[0] + ',' + str(social_feature) + ',' + str(label) + '\n'
                 # if label == 1:
                 # #     self.positive.append(s)
                 # # else:

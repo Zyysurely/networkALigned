@@ -15,21 +15,19 @@ class StrictStableMatching(object):
     def cut_k_list(self, k):
         logger.debug("k is %s" % (str(k)))
         # 产生配对的dict，设置k为3 four,tw 1,0，这里设置k
-        four_result_list = {}
-        tw_result_list = {}
+        four_result_list = dict()
+        tw_result_list = dict()
         logger.info(len(self.f_anchor_known_list))
         for line in self.f:
             x_list = line.split(';')
             if len(x_list) == 3:
                 rate = eval(x_list[2])[0]
                 if x_list[0] in four_result_list:
-                    cur_per_list = four_result_list[x_list[0]][0]     # 喜爱的twitter排名
                     four_result_list[x_list[0]][0].append(rate)
                     four_result_list[x_list[0]][1].append(x_list[1])  # 对应的twitter名
                 else:
                     four_result_list[x_list[0]] = [[rate], [x_list[1]]]
                 if x_list[1] in tw_result_list:
-                    cur_per_list = tw_result_list[x_list[1]][0]       # 喜爱的twitter排名
                     tw_result_list[x_list[1]][0].append(rate)
                     tw_result_list[x_list[1]][1].append(x_list[0])    # 对应的twitter名
                 else:
@@ -39,7 +37,7 @@ class StrictStableMatching(object):
             s = dict()
             for i in range(0, len(four_result_list[item][1])):
                 s[four_result_list[item][1][i]] = four_result_list[item][0][i]
-            s = sorted(s.items(), key=lambda item: item[1], reverse=True)
+            s = sorted(s.items(), key=lambda j: j[1], reverse=True)
             s = map(lambda x: x[0], s)
             four_result_list[item] = list(s)
             if k is not None:
@@ -50,7 +48,7 @@ class StrictStableMatching(object):
             s = dict()
             for i in range(0, len(tw_result_list[item][1])):
                 s[tw_result_list[item][1][i]] = tw_result_list[item][0][i]
-            s = sorted(s.items(), key=lambda item: item[1], reverse=True)
+            s = sorted(s.items(), key=lambda j: j[1], reverse=True)
             s = map(lambda x: x[0], s)
             tw_result_list[item] = list(s)
             if k is not None:
@@ -66,7 +64,7 @@ class StrictStableMatching(object):
         women = sorted(womanprefers.keys())  # list形式
         men = sorted(manprefers.keys())
         manfree = men[:]  # twitter user who is free (not engaged)
-        engaged = {}      # map woman:man的格式, 也就是anchor的配对
+        engaged = dict()  # map woman:man的格式, 也就是anchor的配对
         while manfree:    # still some man is free而且还没达到k的标准，是在list处就处理好的
             man = manfree.pop(0)
             if man not in self.t_anchor_known_list:
@@ -109,4 +107,4 @@ class StrictStableMatching(object):
             sums = sums + 1
         self.right = num
         self.all = sums
-        logger.info(str(self.right) + ','+ str(self.all))
+        logger.info(str(self.right) + ',' + str(self.all))
